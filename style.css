@@ -13,9 +13,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .urna {
+  margin-top: 50px;
   background-color: #dbd5c9;
   padding: 30px;
   display: flex;
+  border: 2px solid #333;
 }
 .tela {
   width: 500px;
@@ -142,7 +144,7 @@ body {
 }
 
 .aviso--grande {
-  font-size: 45px;
+  font-size: 41px;
   font-weight: bold;
 }
 .aviso--gigante {
