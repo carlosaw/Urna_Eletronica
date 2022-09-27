@@ -5,6 +5,9 @@ let aviso = document.querySelector('.d-2');
 let lateral = document.querySelector('.d-1-right');
 let numeros = document.querySelector('.d-1-3');
 
+let audioDigito = document.querySelector('.audio-digito');
+let audioFim = document.querySelector('.audio-fim');
+
 let etapaAtual = 0;// Etapa de VEREADOR
 let numero = '';
 let votoBranco = false;
@@ -66,6 +69,7 @@ function atualizaInterface() {
   
 
 function clicou(n) {
+  audioDigito.play();
   let elNumero = document.querySelector('.numero.pisca');
   if(elNumero !== null) {
     elNumero.innerHTML = n;
@@ -80,16 +84,19 @@ function clicou(n) {
   }
 }
 function branco() {
-  numero = '';
-  votoBranco = true;
-
-  seuVotoPara.style.display = 'block';
-  aviso.style.display = 'block';
-  numeros.innerHTML = '';
-  descricao.innerHTML = '<div class="aviso--grande pisca">VOTO EM BRANCO</div>';
-  lateral.innerHTML = '';
+  audioDigito.play();
+  if (numero === '') {
+    votoBranco = true;
+    seuVotoPara.style.display = 'block';
+    aviso.style.display = 'block';
+    numeros.innerHTML = '';
+    descricao.innerHTML = '<div class="aviso--grande pisca">VOTO EM BRANCO</div>'
+  } else {
+    alert('Para votar em branco, não pode ter digitado nenhum número.');
+  }
 }
 function corrige() {
+  audioDigito.play();
   comecarEtapa();
 }
 function confirma() {
@@ -97,17 +104,20 @@ function confirma() {
   let votoConfirmado = false;
 
   if(votoBranco === true) {
+    audioFim.play();
     votoConfirmado = true;
     votos.push({
       etapa: etapas[etapaAtual].titulo,
       voto: 'branco'
     });
   } else if(numero.length === etapa.numeros) {
+    audioFim.play();
     votoConfirmado = true;
     votos.push({
       etapa: etapas[etapaAtual].titulo,
       voto: numero
     });
+    
   }
 
   if(votoConfirmado) {
@@ -117,10 +127,11 @@ function confirma() {
     } else {
       document.querySelector('.tela').innerHTML = '<div class="aviso--gigante pisca">FIM</div>';
       console.log(votos);
+      setTimeout(function(){
+        window.location.href = "index.html"
+      }, 3000);
     }
-    setTimeout(function(){
-      window.location.href = "index.html"
-    }, 10000);
+    
   }
 }
 
